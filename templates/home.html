@@ -7,51 +7,150 @@
     body {
       background-color: #141414;
       color: #fff;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
     }
+
     .netflix-logo {
       font-size: 3rem;
       font-weight: bold;
       color: #e50914;
       text-align: center;
-      margin: 30px 0;
+      margin: 30px 0 10px;
     }
+
+    .search-box {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .search-box input {
+      width: 60%;
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-left: 30px;
+      margin-bottom: 10px;
+      border-left: 5px solid #e50914;
+      padding-left: 10px;
+    }
+
     .card-container {
       display: flex;
       overflow-x: auto;
-      padding: 20px;
+      scroll-snap-type: x mandatory;
       gap: 20px;
+      padding: 20px 30px;
     }
+
     .video-card {
       min-width: 300px;
       background-color: #222;
       border: none;
-      cursor: pointer;
+      border-radius: 12px;
+      overflow: hidden;
+      scroll-snap-align: start;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.4s ease;
+      animation: fadeIn 0.6s ease;
     }
+
     .video-card img {
       width: 100%;
-      border-radius: 10px;
+      height: auto;
+      border-radius: 12px;
     }
+
     .video-card:hover {
-      transform: scale(1.05);
-      transition: 0.3s;
+      transform: scale(1.08);
+      box-shadow: 0 0 20px #e50914;
+    }
+
+    .card-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .card-container::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .hidden {
+      display: none !important;
     }
   </style>
 </head>
 <body>
+
   <div class="netflix-logo">Mini Netflix</div>
-  <h4 class="ms-4">Trending Now</h4>
-  <div class="card-container">
-    <a href="/watch/1" class="video-card">
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search movies...">
+  </div>
+
+  <!-- 🔥 Trending Now -->
+  <div class="section-title">🔥 Trending Now</div>
+  <div class="card-container" data-section="Trending">
+    <a href="/watch/1" class="video-card" data-title="Action Movie">
       <img src="{{ url_for('static', filename='thumbnails/thumb1.jpg') }}" alt="thumb1">
     </a>
-    <a href="/watch/2" class="video-card">
+    <a href="/watch/2" class="video-card" data-title="Your Video">
       <img src="{{ url_for('static', filename='thumbnails/thumb2.jpg') }}" alt="thumb2">
     </a>
-    <a href="/watch/3" class="video-card">
+  </div>
+
+  <!-- 🎬 Top Picks -->
+  <div class="section-title">🎬 Top Picks For You</div>
+  <div class="card-container" data-section="Top Picks">
+    <a href="/watch/3" class="video-card" data-title="Drama Show">
+      <img src="{{ url_for('static', filename='thumbnails/thumb3.jpg') }}" alt="thumb3">
+    </a>
+    <a href="/watch/1" class="video-card" data-title="Action Movie 2">
+      <img src="{{ url_for('static', filename='thumbnails/thumb1.jpg') }}" alt="thumb1">
+    </a>
+  </div>
+
+  <!-- 🆕 New Releases -->
+  <div class="section-title">🆕 New Releases</div>
+  <div class="card-container" data-section="New Releases">
+    <a href="/watch/2" class="video-card" data-title="New Action Movie">
+      <img src="{{ url_for('static', filename='thumbnails/thumb2.jpg') }}" alt="thumb2">
+    </a>
+    <a href="/watch/3" class="video-card" data-title="New Drama">
       <img src="{{ url_for('static', filename='thumbnails/thumb3.jpg') }}" alt="thumb3">
     </a>
   </div>
+
+  <!-- 💡 Search Filter Script -->
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('keyup', function () {
+      const filter = this.value.toLowerCase();
+      const cards = document.querySelectorAll('.video-card');
+
+      cards.forEach(card => {
+        const title = card.getAttribute('data-title').toLowerCase();
+        if (title.includes(filter)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
 
