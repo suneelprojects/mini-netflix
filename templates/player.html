@@ -9,19 +9,35 @@
       text-align: center;
       margin: 0;
       padding: 20px;
+      font-family: Arial, sans-serif;
     }
     video {
       width: 80%;
       border-radius: 10px;
       box-shadow: 0 0 20px #e50914;
     }
+    .highlight {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e50914;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.2em;
+      box-shadow: 0 0 10px #e50914;
+      display: inline-block;
+    }
   </style>
 </head>
 <body>
-  <h1>Now Playing 🎬</h1>
+  <h1>Now Playing 🎬 </h1>
   <video controls autoplay>
     <source src="{{ video_url }}" type="video/mp4">
     Your browser does not support the video tag.
   </video>
+
+  <div class="highlight">
+    Success! We are watching this through CloudFront CDN
+  </div>
 </body>
 </html>
+
