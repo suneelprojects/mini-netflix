@@ -3,7 +3,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 # Replace with your CloudFront base URL
-CLOUDFRONT_BASE_URL = "https://d1b8sjr5qh3aka.cloudfront.net"
+CLOUDFRONT_BASE_URL = "https://dkwkq46bcpogk.cloudfront.net"
 
 @app.route('/')
 def home():
